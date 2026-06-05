@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual Environment
+venv/
+.venv/
+
+# Environment Variables
+.env
+
+# ChromaDB
+vectordb/
+
+# Ignore cloned repos
+data/github/
+
+# macOS
+.DS_Store
+
+*.log
