@@ -13,6 +13,16 @@ import os
 
 load_dotenv()
 
+import os
+
+if not os.path.exists("./vectordb/chroma.sqlite3"):
+
+    print("Building vector database...")
+
+    os.system(
+        "python build_vectordb.py"
+    )
+
 genai.configure(
     api_key=os.getenv(
         "GEMINI_API_KEY"
@@ -37,9 +47,21 @@ db = chromadb.PersistentClient(
     path="./vectordb"
 )
 
-collection = db.get_collection(
-    name="persona"
-)
+try:
+
+    collection = db.get_collection(
+        name="persona"
+    )
+
+except:
+
+    collection = db.create_collection(
+        name="persona"
+    )
+
+    print(
+        "Created empty persona collection."
+    )
 
 SYSTEM_PROMPT = """
 You are Riya Shah's AI representative.
