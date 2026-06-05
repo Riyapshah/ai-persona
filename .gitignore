@@ -9,8 +9,8 @@ venv/
 # Environment Variables
 .env
 
-# ChromaDB
-vectordb/
+# # ChromaDB
+# vectordb/
 
 # Ignore cloned repos
 data/github/
