@@ -166,6 +166,8 @@ real information from her portfolio.
 </div>
 """, unsafe_allow_html=True)
 
+
+
 # ==================================================
 # SESSION STATE
 # ==================================================
@@ -173,11 +175,21 @@ real information from her portfolio.
 if "messages" not in st.session_state:
     st.session_state["messages"] = []
 
+def ask_ai(question):
+
+    st.session_state["messages"].append(
+        {
+            "role": "user",
+            "content": question
+        }
+    )
+
+    ...
+
 # ==================================================
 # SUGGESTED QUESTIONS
 # ==================================================
 
-selected_question = None
 
 if len(st.session_state["messages"]) == 0:
 
@@ -189,33 +201,37 @@ if len(st.session_state["messages"]) == 0:
 
         if st.button(
             "👋 Tell me about yourself",
-            use_container_width=True
+            use_container_width=True,
+            key="p1"
         ):
-            selected_question = (
+            ask_ai(
                 "Tell me about yourself."
             )
 
         if st.button(
             "🚀 What projects have you built?",
-            use_container_width=True
+            use_container_width=True,
+            key="p2"
         ):
-            selected_question = (
+            ask_ai(
                 "What projects have you built?"
             )
 
         if st.button(
             "💼 Describe your internship",
-            use_container_width=True
+            use_container_width=True,
+            key="p3"
         ):
-            selected_question = (
+            ask_ai(
                 "Describe your internship experience."
             )
 
         if st.button(
             "🤖 What AI technologies do you use?",
-            use_container_width=True
+            use_container_width=True,
+            key="p4"
         ):
-            selected_question = (
+            ask_ai(
                 "What AI technologies do you use?"
             )
 
@@ -223,35 +239,40 @@ if len(st.session_state["messages"]) == 0:
 
         if st.button(
             "☁️ Explain your cloud experience",
-            use_container_width=True
+            use_container_width=True,
+            key="p5"
         ):
-            selected_question = (
+            ask_ai(
                 "Explain your cloud experience."
             )
 
         if st.button(
             "📂 Tell me about your GitHub",
-            use_container_width=True
+            use_container_width=True,
+            key="p6"
         ):
-            selected_question = (
+            ask_ai(
                 "Tell me about your GitHub projects."
             )
 
         if st.button(
             "🧠 What are your strongest skills?",
-            use_container_width=True
+            use_container_width=True,
+            key="p7"
         ):
-            selected_question = (
+            ask_ai(
                 "What are your strongest skills?"
             )
 
         if st.button(
             "🎯 Why should I hire you?",
-            use_container_width=True
+            use_container_width=True,
+            key="p8"
         ):
-            selected_question = (
+            ask_ai(
                 "Why should I hire you?"
             )
+
 
 
 # ==================================================
@@ -342,4 +363,3 @@ Resume • GitHub • Embeddings • ChromaDB • Groq • Railway
 
 </div>
 """, unsafe_allow_html=True)
-

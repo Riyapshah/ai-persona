@@ -53,10 +53,6 @@ embedding_model = SentenceTransformer(
     "all-MiniLM-L6-v2"
 )
 
-# -----------------------------
-# ChromaDB
-# -----------------------------
-
 print("Connecting to ChromaDB...")
 
 db = chromadb.PersistentClient(
@@ -145,6 +141,7 @@ def chat(request: ChatRequest):
         n_results=8
     )
 
+
     print("\n======================")
     print(results)
     print("======================\n")
@@ -230,3 +227,59 @@ Answer:
             f"LLM Error: {str(e)}"
 
         }
+
+from fastapi.responses import JSONResponse
+
+@app.post("/voice")
+def voice(request: ChatRequest):
+
+    query_embedding = embedding_model.encode(
+        request.question
+    )
+
+    results = collection.query(
+        query_embeddings=[
+            query_embedding.tolist()
+        ],
+        n_results=8
+    )
+
+    context = "\n\n".join(
+        results["documents"][0]
+    )
+
+    prompt = f"""
+You are Riya Shah's AI phone assistant.
+
+Speak naturally like you are talking to someone over a phone call.
+
+Keep answers concise.
+Maximum about 4-5 sentences.
+
+Only answer using the information below.
+
+Context:
+{context}
+
+Question:
+{request.question}
+
+Answer:
+"""
+
+    response = client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+        messages=[
+            {
+                "role":"user",
+                "content":prompt
+            }
+        ]
+    )
+
+    return JSONResponse(
+        {
+            "text":
+            response.choices[0].message.content
+        }
+    )
