@@ -30,7 +30,7 @@ genai.configure(
 )
 
 llm = genai.GenerativeModel(
-    "gemini-2.5-flash"
+    "gemini-2.0-flash"
 )
 
 app = FastAPI()
